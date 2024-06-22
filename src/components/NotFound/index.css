@@ -1,0 +1,29 @@
+@media screen and (min-width: 768px) {
+  .notfound-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+  }
+
+  .notfound-image {
+    height: 430px;
+    width: 500px;
+  }
+
+  .notfound-head {
+    font-family: 'Roboto';
+    font-size: 45px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+
+  .notfound-para {
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 400;
+    color: #cbd5e1;
+  }
+}

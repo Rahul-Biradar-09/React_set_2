@@ -1,0 +1,118 @@
+@media screen and (min-width: 768px) {
+  .JobItem-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 36px;
+    border: 0px;
+    border-radius: 20px;
+    background-color: #272727;
+    margin-bottom: 55px;
+  }
+
+  .J3 {
+    width: 93%;
+  }
+
+  .link-container {
+    height: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 36px;
+  }
+
+  .link-text {
+    font-family: 'Roboto';
+    font-size: 22px;
+    font-weight: bold;
+    color: #6366f1;
+    text-decoration: none;
+  }
+
+  .link-icon {
+    height: 18px;
+    width: 18px;
+    color: #6366f1;
+  }
+
+  .salary-text2 {
+    font-size: 30px;
+  }
+
+  .work-text3 {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 38px;
+  }
+
+  .skills-text {
+    font-family: 'Roboto';
+    font-size: 26px;
+    font-weight: 401;
+    color: #ffffff;
+  }
+
+  .skills-container {
+    height: 220px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: space-between;
+    flex-wrap: wrap;
+  }
+
+  .skills-icon {
+    height: 50px;
+    width: 60px;
+  }
+
+  .skills-Item {
+    height: 80px;
+    width: 145px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .skills-para {
+    font-family: 'Roboto';
+    font-size: 19px;
+    font-weight: 401;
+    color: #ffffff;
+  }
+
+  .life-at-company-container {
+    height: 280px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 35px;
+    margin-bottom: 15px;
+  }
+
+  .life-at-company-description-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 65%;
+    flex-wrap: wrap;
+  }
+
+  .description-icon {
+    height: 100%;
+    width: 28%;
+  }
+}

@@ -1,0 +1,33 @@
+@media screen and (min-width: 768px) {
+  .JobItemDetails-container {
+    height: 100%;
+  }
+
+  .JobItem-bg-container {
+    height: 100%;
+    width: 100%;
+    padding: 45px;
+    background-color: #000000;
+  }
+
+  .similar-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: 45px;
+    flex-wrap: wrap;
+  }
+
+  .jobsItem-failure-container {
+    height: 88vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+  }
+}

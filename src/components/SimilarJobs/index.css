@@ -1,0 +1,35 @@
+@media screen and (min-width: 768px) {
+    .similar-Items {
+    height: 600px;
+    width: 360px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 0px;
+    border-radius: 18px;
+    background-color: #272727;
+    margin-bottom: 38px;
+  }
+
+  .similar-head {
+    font-family: 'Roboto';
+    font-size: 26px;
+    font-weight: 401;
+    color: #ffffff;
+    line-height: 0px;
+  }
+
+  .similar-para {
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 34px;
+  }
+
+  .J4 {
+    width: 75%;
+  }
+}

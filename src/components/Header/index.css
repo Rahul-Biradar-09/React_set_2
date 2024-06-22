@@ -1,0 +1,71 @@
+@media screen and (min-width: 768px) {
+  .nav-container {
+    height: 12vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #272727;
+    padding: 40px;
+  }
+
+  .C1 {
+    height: 100%;
+    width: 56%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .jobby-image {
+    height: 45px;
+    width: 155px;
+  }
+
+  .jobby-button {
+    border: 0px;
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+  }
+
+  .text-container {
+    height: 30px;
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-text {
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 405;
+    color: #cbd5e1;
+    cursor: pointer;
+    outline: none;
+    border: 0px;
+    background-color: transparent;
+  }
+
+  .logout-button {
+    height: 37px;
+    width: 133px;
+    font-family: 'Roboto';
+    font-size: 2px;
+    font-weight: 405;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: 0px;
+    border-radius: 4px;
+    background-color: #6366f1;
+  }
+}
