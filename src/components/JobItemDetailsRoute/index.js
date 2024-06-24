@@ -47,25 +47,26 @@ class JobItemDetailsRoute extends Component {
     if (response.ok === true) {
       const data = await response.json()
       const filteredData = {
-        companyUrl: data.jobs_details.company_image_url,
-        companyWebsiteUrl: data.jobs_details.company_website_url,
-        employmentType: data.jobs_details.employment_type,
-        jobDescription: data.jobs_details.job_description,
-        id: data.jobs_details.id,
-        skills: data.jobs_details.skills.map(eachItem => ({
+        title: data.job_details.title,
+        companyUrl: data.job_details.company_logo_url,
+        companyWebsiteUrl: data.job_details.company_website_url,
+        employmentType: data.job_details.employment_type,
+        jobDescription: data.job_details.job_description,
+        id: data.job_details.id,
+        skills: data.job_details.skills.map(eachItem => ({
           imageUrl: eachItem.image_url,
           name: eachItem.name,
         })),
         lifeAtCompany: {
-          imagecompanyUrl: data.jobs_details.life_at_company.image_url,
-          description: data.jobs_details.life_at_company.description,
+          imagecompanyUrl: data.job_details.life_at_company.image_url,
+          description: data.job_details.life_at_company.description,
         },
-        location: data.jobs_details.location,
-        annualPackage: data.jobs_details.package_per_annum,
-        rating: data.jobs_details.rating,
+        location: data.job_details.location,
+        annualPackage: data.job_details.package_per_annum,
+        rating: data.job_details.rating,
       }
 
-      const similarData = data.jobs_details.similar_jobs.map(eachItem => ({
+      const similarData = data.similar_jobs.map(eachItem => ({
         companyLogoUrl: eachItem.company_logo_url,
         employmentType: eachItem.employment_type,
         id: eachItem.id,
@@ -94,10 +95,10 @@ class JobItemDetailsRoute extends Component {
   }
 
   renderSuccess = () => {
-    const {jobItemDeatils, similarJobs} = this.state
+    const {jobItemDetails, similarJobs} = this.state
     return (
       <div className="JobItem-bg-container">
-        <JobItem jobItemDeatils={jobItemDeatils} key={jobItemDeatils.id} />
+        <JobItem jobItemDetails={jobItemDetails} key={jobItemDetails.id} />
         <h1 className="salary-text1 salary-text2">Similar Jobs</h1>
         <div className="similar-container">
           {similarJobs.map(eachItem => (

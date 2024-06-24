@@ -30,7 +30,7 @@ const Header = props => {
           <Link to="/">
             <button type="button" className="nav-text">
               Home
-            </button>{' '}
+            </button>
           </Link>
           <Link to="/jobs">
             <button type="button" className="nav-text">

@@ -14,8 +14,6 @@ import {IoLocationSharp} from 'react-icons/io5'
 
 import {IoBriefcaseSharp} from 'react-icons/io5'
 
-import './index.css'
-
 import Header from '../Header'
 
 import JobFilters from '../JobFilters'
@@ -58,7 +56,13 @@ const salaryRangesList = [
   },
 ]
 
-const apiStatusConstants = {
+const apiStatusProfileConstants = {
+  initial: 'Loading',
+  success: 'Success',
+  failure: 'Failure',
+}
+
+const apiStatusJobsConstants = {
   initial: 'Loading',
   success: 'Success',
   failure: 'Failure',
@@ -66,18 +70,18 @@ const apiStatusConstants = {
 
 class JobsRoute extends Component {
   state = {
-    apiStatus: apiStatusConstants.initial,
+    apiProfileStatus: apiStatusProfileConstants.initial,
+    apiJobsStatus: apiStatusJobsConstants.initial,
     profileDetails: {},
     jobsItems: [],
     search: '',
     employment: '',
     salary: '',
-    title: '',
   }
 
   componentDidMount() {
-    this.getProfileDetails()
     this.getJobsDetails()
+    this.getProfileDetails()
   }
 
   getProfileDetails = async () => {
@@ -93,16 +97,16 @@ class JobsRoute extends Component {
     if (response.ok === true) {
       const data = await response.json()
       const profileInfo = {
-        name: data.name,
-        imageUrl: data.profile_image_url,
-        shortBio: data.short_bio,
+        name: data.profile_details.name,
+        imageUrl: data.profile_details.profile_image_url,
+        shortBio: data.profile_details.short_bio,
       }
       this.setState({
         profileDetails: profileInfo,
-        apiStatus: apiStatusConstants.success,
+        apiProfileStatus: apiStatusProfileConstants.success,
       })
     } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
+      this.setState({apiProfileStatus: apiStatusProfileConstants.failure})
     }
   }
 
@@ -121,7 +125,7 @@ class JobsRoute extends Component {
       const data = await response.json()
       const jobsInfo = data.jobs.map(eachItem => ({
         id: eachItem.id,
-        companyUrl: eachItem.company_image_url,
+        companyUrl: eachItem.company_logo_url,
         employmentType: eachItem.employment_type,
         jobDescription: eachItem.job_description,
         location: eachItem.location,
@@ -129,18 +133,12 @@ class JobsRoute extends Component {
         rating: eachItem.rating,
         title: eachItem.title,
       }))
-
-      if (jobsInfo.length !== 0) {
-        this.setState({
-          jobsItems: jobsInfo,
-          title: jobsInfo.title,
-          apiStatus: apiStatusConstants.success,
-        })
-      } else {
-        this.renderNoJobs()
-      }
+      this.setState({
+        jobsItems: jobsInfo,
+        apiJobsStatus: apiStatusJobsConstants.success,
+      })
     } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
+      this.setState({apiJobsStatus: apiStatusJobsConstants.failure})
     }
   }
 
@@ -167,7 +165,7 @@ class JobsRoute extends Component {
 
   retryButton = () => {
     this.setState(
-      {apiStatus: apiStatusConstants.initial},
+      {apiProfileStatus: apiStatusProfileConstants.initial},
       this.getProfileDetails,
     )
   }
@@ -187,13 +185,13 @@ class JobsRoute extends Component {
   }
 
   renderProfileInfo = () => {
-    const {apiStatus} = this.state
-    switch (apiStatus) {
-      case apiStatusConstants.initial:
+    const {apiProfileStatus} = this.state
+    switch (apiProfileStatus) {
+      case apiStatusProfileConstants.initial:
         return this.renderProfileLoading()
-      case apiStatusConstants.success:
+      case apiStatusProfileConstants.success:
         return this.renderProfileSuccess()
-      case apiStatusConstants.failure:
+      case apiStatusProfileConstants.failure:
         return this.renderProfileFailure()
       default:
         return null
@@ -218,7 +216,7 @@ class JobsRoute extends Component {
 
   renderJobsLoading = () => {
     return (
-      <div className="loader-container" data-testid="loader">
+      <div data-testid="loader">
         <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
       </div>
     )
@@ -226,63 +224,57 @@ class JobsRoute extends Component {
 
   renderJobsSuccess = () => {
     const {jobsItems} = this.state
-    const {
-      id,
-      companyUrl,
-      employmentType,
-      jobDescription,
-      location,
-      annualPackage,
-      rating,
-      title,
-    } = jobsItems
-
     return (
-      <div className="job-cards-container">
-        <Link to="/jobs/id" className="link-item">
-          <li key={id}>
-            <div className="job-description-container">
-              <div className="J1">
-                <img
-                  src={companyUrl}
-                  alt="company logo"
-                  className="company-image"
-                />
-                <div className="J2">
-                  <h1 className="job-title">{title}</h1>
-                  <div className="rating-container">
-                    <FaStar className="star-icon" />
-                    <p className="rating-text">{rating}</p>
+      <ul className="job-cards-container">
+        {jobsItems.map(eachItem => (
+          <Link className="link-item" to={`/jobs/${eachItem.id}`}>
+            <li key={eachItem.id}>
+              <div className="job-description-container">
+                <div className="J1">
+                  <img
+                    src={eachItem.companyUrl}
+                    alt="company logo"
+                    className="company-image"
+                  />
+                  <div className="J2">
+                    <h1 className="job-title">{eachItem.title}</h1>
+                    <div className="rating-container">
+                      <FaStar className="star-icon" />
+                      <p className="rating-text">{eachItem.rating}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="location-container">
-                <div className="location-employement-container">
-                  <div className="L1">
-                    <IoLocationSharp className="work-icon" />
-                    <p className="work-text">{location}</p>
+                <div className="location-container">
+                  <div className="location-employement-container">
+                    <div className="L1">
+                      <IoLocationSharp className="work-icon" />
+                      <p className="work-text">{eachItem.location}</p>
+                    </div>
+                    <div className="L1">
+                      <IoBriefcaseSharp className="work-icon" />
+                      <p className="work-text">{eachItem.employmentType}</p>
+                    </div>
                   </div>
-                  <div className="L1">
-                    <IoBriefcaseSharp className="work-icon" />
-                    <p className="work-text">{employmentType}</p>
-                  </div>
+                  <p className="salary-text">{eachItem.annualPackage}</p>
                 </div>
-                <p className="salary-text">{annualPackage}</p>
+                <hr className="line" />
+                <div className="description-container">
+                  <h1 className="salary-text1">Description</h1>
+                  <p className="work-text2">{eachItem.jobDescription}</p>
+                </div>
               </div>
-              <hr className="line" />
-              <div className="description-container">
-                <h1 className="salary-text1">Description</h1>
-                <p className="work-text2">{jobDescription}</p>
-              </div>
-            </div>
-          </li>
-        </Link>
-      </div>
+            </li>
+          </Link>
+        ))}
+      </ul>
     )
   }
 
   jobsretryButton = () => {
-    this.setState({apiStatus: apiStatusConstants.initial}, this.getJobsDetails)
+    this.setState(
+      {apiJobsStatus: apiStatusJobsConstants.initial},
+      this.getJobsDetails,
+    )
   }
 
   renderJobsFailure = () => {
@@ -309,13 +301,13 @@ class JobsRoute extends Component {
   }
 
   renderJobsInfo = () => {
-    const {apiStatus} = this.state
-    switch (apiStatus) {
-      case apiStatusConstants.initial:
+    const {apiJobsStatus} = this.state
+    switch (apiJobsStatus) {
+      case apiStatusJobsConstants.initial:
         return this.renderJobsLoading()
-      case apiStatusConstants.success:
+      case apiStatusJobsConstants.success:
         return this.renderJobsSuccess()
-      case apiStatusConstants.failure:
+      case apiStatusJobsConstants.failure:
         return this.renderJobsFailure()
       default:
         return null
@@ -349,7 +341,7 @@ class JobsRoute extends Component {
     return (
       <div className="jobsRoute-bg-container">
         <Header />
-        <div className="jobsRoute-bottom-container">
+        <div className="route-bottom-container">
           <div className="side-panel">
             {this.renderProfileInfo()}
             <hr className="line" />
@@ -360,28 +352,26 @@ class JobsRoute extends Component {
               salaryValue={this.salaryValue}
             />
           </div>
-          <ul className="list">
-            <div className="main-panel">
-              <div className="search-container">
-                <input
-                  type="search"
-                  className="search-input"
-                  placeholder="Search"
-                  onChange={this.searchInput}
-                  onKeyDown={this.searchKey}
-                />
-                <button
-                  type="button"
-                  className="search-button"
-                  data-testid="searchButton"
-                  onClick={this.searchIcon}
-                >
-                  <BsSearch className="search-icon" />
-                </button>
-              </div>
-              {this.renderJobsInfo()}
+          <div className="main-panel">
+            <div className="search-container">
+              <input
+                type="search"
+                className="search-input"
+                placeholder="Search"
+                onChange={this.searchInput}
+                onKeyDown={this.searchKey}
+              />
+              <button
+                type="button"
+                className="search-button"
+                data-testid="searchButton"
+                onClick={this.searchIcon}
+              >
+                <BsSearch className="search-icon" />
+              </button>
             </div>
-          </ul>
+            {this.renderJobsInfo()}
+          </div>
         </div>
       </div>
     )
